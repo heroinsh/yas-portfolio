@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasmin Ebadi Portfolio</title>
+    <link rel="stylesheet" href="./style/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Import Fonts */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap");
+
+      /* CSS Variables with provided color template */
+      :root {
+        --bg-clr: #FFF2F2;
+        --primery-clr: #A9B5DF;
+        --bx-btn-clr: #7886C7;
+        --text-color: #2D336B;
+        --text-secendery: #5A5E89;
+        --glass-clr: rgba(169, 181, 223, 0.15);
+        --line-clr: rgba(120, 134, 199, 0.4);
+        --scrollbar-bg: rgba(120, 134, 199, 0.2);
+        --scrollbar-thumb: #7886C7;
+        --scrollbar-hover: #2D336B;
+        --transition-speed: 0.3s;
+        --animation-duration: 1s;
+        --font-base: "Poppins", sans-serif;
+      }
+
+      /* Responsive font size using clamp() */
+      html {
+        font-size: clamp(14px, 1.5vw, 18px);
+      }
+
+      /* Dark Mode support */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-clr: #2D336B;
+          --primery-clr: #A9B5DF;
+          --bx-btn-clr: #7886C7;
+          --text-color: #FFF2F2;
+          --text-secendery: #D0D0D0;
+          --glass-clr: rgba(169, 181, 223, 0.25);
+          --line-clr: rgba(120, 134, 199, 0.5);
+          --scrollbar-bg: rgba(120, 134, 199, 0.3);
+          --scrollbar-thumb: #7886C7;
+          --scrollbar-hover: #A9B5DF;
+        }
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--font-base);
+        color: var(--text-color);
+      }
+
+      body {
+        background-color: var(--bg-clr);
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        transition: all var(--transition-speed) ease-in-out;
+        animation: fadeIn var(--animation-duration) ease-in-out;
+        scroll-behavior: smooth;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--scrollbar-bg);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border-radius: 10px;
+        transition: all var(--transition-speed) ease-in-out;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-hover);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Navbar using Flexbox – structure preserved */
+      header {
+        background: linear-gradient(
+          to right,
+          var(--glass-clr),
+          rgba(255, 255, 255, 0.3)
+        );
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid var(--line-clr);
+        transition: all 0.4s ease;
+        animation: slideDown 0.8s ease-in-out;
+        z-index: 999;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 100px;
+      }
+
+      header .logo {
+        font-size: 2rem;
+        text-decoration: none;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      header .menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      header .menu a {
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 0 15px;
+        padding: 5px 15px;
+        border-radius: 1rem;
+        transition: color var(--transition-speed) ease,
+          transform var(--transition-speed) ease;
+      }
+
+      header .menu .active {
+        color: var(--primery-clr);
+      }
+
+      header .menu a:hover,
+      header .menu a:focus {
+        border-bottom: 3px solid var(--primery-clr);
+        transform: translateY(-2px);
+      }
+
+      header .bx {
+        color: var(--text-color);
+        font-size: 2.5rem;
+        cursor: pointer;
+      }
+
+      header .btn {
+        display: none;
+      }
+
+      /* Mobile off-canvas menu (preserving element locations) */
+      @media (max-width: 768px) {
+        header {
+          padding: 12px 24px;
+        }
+        header .menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          width: 280px;
+          height: 100vh;
+          background-color: var(--bg-clr);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          transition: right 0.6s ease;
+        }
+        header .menu.active {
+          right: 0;
+        }
+        header .menu a {
+          font-size: 1rem;
+          margin: 16px;
+        }
+        header .btn {
+          display: block;
+        }
+      }
+
+      /* Main container – using Flexbox (no change in element order) */
+      .container {
+        position: relative;
+        margin: 4.5rem 0;
+        width: 100%;
+        padding: 1rem 6rem;
+        display: flex;
+        gap: 0.5rem;
+        animation: fadeInUp var(--animation-duration) ease-in-out;
+      }
+
+      /* Ensure responsiveness without reordering elements */
+      @media (max-width: 1024px) {
+        .container {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .content-top-info .imgsrw {
+          width: 90%;
+          height: auto;
+          margin: 3rem auto;
+        }
+        .project-post-items {
+          width: 95%;
+        }
+      }
+
+      /* Project posts – using Flexbox for items */
+      .project-post-items {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        animation: fadeInUp var(--animation-duration) ease-in-out;
+      }
+
+      .project-post-items:hover {
+        transform: scale(1.1);
+        background: var(--line-clr);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      /* More button with micro-interactions */
+      .morebtn {
+        background: linear-gradient(135deg, var(--bx-btn-clr), var(--primery-clr));
+        color: #fff;
+        padding: 14px 20px;
+        border-radius: 10px;
+        transition: background 0.3s ease, transform 0.2s ease;
+        font-weight: bold;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .morebtn:hover {
+        background: linear-gradient(135deg, var(--primery-clr), var(--bx-btn-clr));
+        transform: scale(1.05);
+      }
+
+      .morebtn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: width 0.3s ease, height 0.3s ease, top 0.3s ease,
+          left 0.3s ease;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+      }
+
+      .morebtn:hover::after {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+      }
+
+      .blog-link {
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .blog-link:hover {
+        color: var(--bx-btn-clr);
+        transform: translateX(8px);
+      }
+
+      /* Accessibility Focus States */
+      a:focus {
+        outline: 2px dashed var(--primery-clr);
+        outline-offset: 4px;
+      }
+      .imgsrw{
+        border-radius: 100%;
+      }
+      .footer{
+        margin-top: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="logo">Yasmin Ebadi</a>
+      <div class="menu">
+        <div class="btn"><i class="bx bx-x"></i></div>
+        <a href="index.html" class="active">About Me</a>
+        <a href="project-page/project.html">Projects</a>
+        <a href="blog-page/blog.html">Blog</a>
+        <a href="#">Resume</a>
+      </div>
+      <div class="btn"><i class="bx bx-menu"></i></div>
+    </header>
+    <section>
+      <div class="container">
+        <div class="row row-1">
+          <div class="col col-1">
+            <div class="col-box content-top-info">
+              <div class="info-box">
+                <h1>Hello, I am Yasmin Ebadi</h1>
+                <br />
+                <p>
+                  UI/UX designer with 3 years of experience in the field, specializing in teamwork.<br />
+                  Throughout my career, I have designed and participated in multiple internal projects,<br />
+                  focusing on creating user-centered designs that enhance both functionality and aesthetics.<br />
+                  I excel at developing visual interfaces and collaborating with cross-functional teams<br />
+                  to deliver high-quality digital products.<br />
+                  Driven by a passion for design and innovation, I am constantly striving to merge creativity<br />
+                  with user needs to create impactful experiences.
+                </p>
+                <div class="icon-info">
+                  <a href="https://www.behance.net/YasminAbbadi"><i class="bx bxl-behance"></i></a>
+                  <a href="https://www.instagram.com/YasminAbbadi"><i class="bx bxl-instagram"></i></a>
+                  <a href="https://www.linkedin.com/in/YasminAbbadi"><i class="bx bxl-linkedin"></i></a>
+                  <a href="https://t.me/YasminAbbadi"><i class="bx bxl-telegram"></i></a>
+                </div>
+              </div>
+              <img src="img/profile.jpg" alt="Yasmin Ebadi" class="imgsrw" />
+            </div>
+          </div>
+          <div class="col col-2">
+            <div class="box-inside-col-1">
+              <div class="content-project-box">
+                <h2>projects</h2>
+                <a href="project-page/project.html" class="morebtn primery-clr">View More</a>
+              </div>
+              <div class="content-project">
+                <div class="project-post-items">
+                  <img src="img/Rezhimo app.png" alt="" class="imgsize" />
+                  <div class="post-item-txt-btom">
+                    <div class="post-item-text">
+                      <a href="#" class="post-link">Rezhimo app</a>
+                      <p class="date-clr">Visual Design</p>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1YgXhqay_Yg_JjM93SCRmmR1cTF6vqUH3/view?usp=sharing" class="morebtn primery-clr">View More</a>
+                  </div>
+                </div>
+                <div class="project-post-items">
+                  <img src="img/Finance App.png" alt="" class="imgsize" />
+                  <div class="post-item-txt-btom">
+                    <div class="post-item-text">
+                      <a href="#" class="post-link">Finance App</a>
+                      <p class="date-clr">Visual Design</p>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1eqlekMOoq_bDYW_k3LbS4iiOo4UwmWOQ/view?usp=sharing" class="morebtn primery-clr">View More</a>
+                  </div>
+                </div>
+                <div class="project-post-items">
+                  <img src="img/istgahapp.png" alt="" class="imgsize" />
+                  <div class="post-item-txt-btom">
+                    <div class="post-item-text">
+                      <a href="#" class="post-link">istgah app</a>
+                      <p class="date-clr">case study</p>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1dkrrZKnRNLQt9OmDb3GQNraPZCDaJHEr/view?usp=sharing" class="morebtn primery-clr">View More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-inside-col-2">
+              <div class="col-inside-1">
+                <div class="content-project-box">
+                  <h2>Post blog</h2>
+                  <a href="blog-page/blog.html" class="morebtn primery-clr">View More</a>
+                </div>
+                <div class="content-blog">
+                  <div class="project-blog-items">
+                    <div>
+                      <a href="#" class="primery-clr blog-link">mobile app uiux design</a><span class="date-clr">1403/02/26</span>
+                      <p class="post-item-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, iure molestias. Quisquam perferendis alias veritatis quos nulla debitis adipisci temporibus!
+                      </p>
+                    </div>
+                    <div>
+                      <a href="#" class="primery-clr blog-link">mobile app uiux design</a><span class="date-clr">1403/02/26</span>
+                      <p class="post-item-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, iure molestias. Quisquam perferendis alias veritatis quos nulla debitis adipisci temporibus!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-inside-2">
+                <div class="col-box aboume-skils">
+                  <h3>Experience</h3>
+                  <ul class="uni-list">
+                    <li>
+                      <p class="name-degree">uiux Designer</p>
+                      <p class="uni-name primery-clr">Freelance</p>
+                      <span class="date-clr">03/2021 - now</span>
+                    </li>
+                    <li>
+                      <p class="name-degree">Digital artist</p>
+                      <p class="uni-name primery-clr">Freelance</p>
+                      <span class="date-clr">01/2017 - now</span>
+                    </li>
+                  </ul>
+                  <a href="#" class="morebtn primery-clr">View More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row row-2">
+          <div class="col-left">
+            <div class="col-box aboume-skils">
+              <h2>About me</h2>
+              <div>
+                <span class="about-txt">Learn, Share, and Grow in Design ❤️</span>
+                <br />
+                <p class="about-txt2">
+                  I love creating impactful design solutions that bring ideas to life and address real-world challenges.
+                </p>
+                <hr />
+                <h2 class="about-txt2">My skills</h2>
+                <ul class="skills-list">
+                  <li>Figma</li>
+                  <li>Wireframing</li>
+                  <li>Adobe Xd</li>
+                  <li>WordPress</li>
+                  <li>Prototyping</li>
+                  <li>User Research</li>
+                  <li>UI/UX</li>
+                  <li>Prototyping</li>
+                  <li>User analysis</li>
+                </ul>
+                <p class="about-txt">
+                  More about my <a href="project-page/project.html">Projects</a> and my <a href="#">Experiences.</a>
+                </p>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+      <p class="about-txt footer">
+        Built by Yasmin. with ❤️ using vanila js.
+      </p>
+    </section>
+    <script>
+      window.addEventListener("scroll", function () {
+        var header = document.querySelector("header");
+        header.classList.toggle("sticky", window.scrollY > 0);
+      });
+      var menu = document.querySelector(".menu");
+      var menubtn = document.querySelector(".bx-menu");
+      var closebtn = document.querySelector(".bx-x");
+      menubtn.addEventListener("click", () => {
+        menu.classList.add("active");
+      });
+      closebtn.addEventListener("click", () => {
+        menu.classList.remove("active");
+      });
+    </script>
+  </body>
+</html>

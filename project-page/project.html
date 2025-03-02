@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasmin portfolio | projects</title>
+    <link rel="stylesheet" href="./../style/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    /* Import Fonts */
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap");
+
+    /* CSS Variables with provided color template */
+    :root {
+      --bg-clr: #FFF2F2;
+      --primery-clr: #A9B5DF;
+      --bx-btn-clr: #7886C7;
+      --text-color: #2D336B;
+      --text-secendery: #5A5E89;
+      --glass-clr: rgba(169, 181, 223, 0.15);
+      --line-clr: rgba(120, 134, 199, 0.4);
+      --scrollbar-bg: rgba(120, 134, 199, 0.2);
+      --scrollbar-thumb: #7886C7;
+      --scrollbar-hover: #2D336B;
+      --transition-speed: 0.3s;
+      --animation-duration: 1s;
+      --font-base: "Poppins", sans-serif;
+    }
+
+    /* Responsive font size using clamp() */
+    html {
+      font-size: clamp(14px, 1.5vw, 18px);
+    }
+
+    /* Dark Mode support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-clr: #2D336B;
+        --primery-clr: #A9B5DF;
+        --bx-btn-clr: #7886C7;
+        --text-color: #FFF2F2;
+        --text-secendery: #D0D0D0;
+        --glass-clr: rgba(169, 181, 223, 0.25);
+        --line-clr: rgba(120, 134, 199, 0.5);
+        --scrollbar-bg: rgba(120, 134, 199, 0.3);
+        --scrollbar-thumb: #7886C7;
+        --scrollbar-hover: #A9B5DF;
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font-base);
+      color: var(--text-color);
+    }
+
+    body {
+      background-color: var(--bg-clr);
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      transition: all var(--transition-speed) ease-in-out;
+      animation: fadeIn var(--animation-duration) ease-in-out;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--scrollbar-bg);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: 10px;
+      transition: all var(--transition-speed) ease-in-out;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-hover);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Navbar using Flexbox – structure preserved */
+    header {
+      background: linear-gradient(
+        to right,
+        var(--glass-clr),
+        rgba(255, 255, 255, 0.3)
+      );
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--line-clr);
+      transition: all 0.4s ease;
+      animation: slideDown 0.8s ease-in-out;
+      z-index: 999;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 100px;
+    }
+
+    header .logo {
+      font-size: 2rem;
+      text-decoration: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    header .menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    header .menu a {
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0 15px;
+      padding: 5px 15px;
+      border-radius: 1rem;
+      transition: color var(--transition-speed) ease,
+        transform var(--transition-speed) ease;
+    }
+
+    header .menu .active {
+      color: var(--primery-clr);
+    }
+
+    header .menu a:hover,
+    header .menu a:focus {
+      border-bottom: 3px solid var(--primery-clr);
+      transform: translateY(-2px);
+    }
+
+    header .bx {
+      color: var(--text-color);
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
+
+    header .btn {
+      display: none;
+    }
+
+    /* Mobile off-canvas menu (preserving element locations) */
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 24px;
+      }
+      header .menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background-color: var(--bg-clr);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.6s ease;
+      }
+      header .menu.active {
+        right: 0;
+      }
+      header .menu a {
+        font-size: 1rem;
+        margin: 16px;
+      }
+      header .btn {
+        display: block;
+      }
+    }
+
+    /* Main container – using Flexbox (no change in element order) */
+    .container {
+      position: relative;
+      margin: 4.5rem 0;
+      width: 100%;
+      padding: 1rem 6rem;
+      display: flex;
+      gap: 0.5rem;
+      animation: fadeInUp var(--animation-duration) ease-in-out;
+    }
+
+    /* Ensure responsiveness without reordering elements */
+    @media (max-width: 1024px) {
+      .container {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      .content-top-info .imgsrw {
+        width: 90%;
+        height: auto;
+        margin: 3rem auto;
+      }
+      .project-post-items {
+        width: 95%;
+      }
+    }
+
+    /* Project posts – using Flexbox for items */
+    .project-post-items {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      animation: fadeInUp var(--animation-duration) ease-in-out;
+    }
+
+    .project-post-items:hover {
+      transform: scale(1.1);
+      background: var(--line-clr);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* More button with micro-interactions */
+    .morebtn {
+      background: linear-gradient(135deg, var(--bx-btn-clr), var(--primery-clr));
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 10px;
+      transition: background 0.3s ease, transform 0.2s ease;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .morebtn:hover {
+      background: linear-gradient(135deg, var(--primery-clr), var(--bx-btn-clr));
+      transform: scale(1.05);
+    }
+
+    .morebtn::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 300%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: width 0.3s ease, height 0.3s ease, top 0.3s ease,
+        left 0.3s ease;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+
+    .morebtn:hover::after {
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+    }
+
+    .blog-link {
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .blog-link:hover {
+      color: var(--bx-btn-clr);
+      transform: translateX(8px);
+    }
+
+    /* Accessibility Focus States */
+    a:focus {
+      outline: 2px dashed var(--primery-clr);
+      outline-offset: 4px;
+    }
+  </style>
+  <body>
+    <header>
+      <a href="./../index.html" class="logo">Yasmin</a>
+      <div class="menu">
+        <div class="btn"><i class="bx bx-x"></i></div>
+        <a href="./../index.html">about me</a>
+        <a href="./../project-page/project.html">projects</a>
+        <a href="./../blog-page/blog.html">blog</a>
+        <a
+          href="#"
+          >resume</a
+        >
+      </div>
+      <div class="btn"><i class="bx bx-menu"></i></div>
+    </header>
+    <section>
+      <div class="container">
+        <div class="menu-top-project">
+          <div class="menu-top-project-page">
+            <a href="./../index.html" class="morebtn">Home</a>
+            <i class="bx bx-chevron-right"></i>
+            <a href="project.html" class="morebtn">Projects</a>
+          </div>
+          <h1>Projects</h1>
+          <div class="project-posts-content">
+            <!-- post 1 -->
+            <div class="project-post-items">
+              <img
+                src="./../img/p1.jpg"
+                alt="Rezhimo app"
+                class="imgsize"
+              />
+              <div class="post-item-txt-btom">
+                <div class="post-item-text">
+                  <a href="#" class="post-link">Rezhimo app</a>
+                  <p class="date-clr">Visual Design</p>
+                </div>
+                <a
+                  href="p1.html"
+                  class="morebtn primery-clr"
+                  >View More</a
+                >
+              </div>
+            </div>
+            <!-- post 2 -->
+            <div class="project-post-items">
+              <img
+                src="./../img/p2.jpg"
+                alt="Finance App"
+                class="imgsize"
+              />
+              <div class="post-item-txt-btom">
+                <div class="post-item-text">
+                  <a href="#" class="post-link">Finance App</a>
+                  <p class="date-clr">Visual Design</p>
+                </div>
+                <a
+                  href="#"
+                  class="morebtn primery-clr"
+                  >View More</a
+                >
+              </div>
+            </div>
+            <!-- post 3 -->
+            <div class="project-post-items">
+              <img
+                src="./../img/p3.jpg"
+                alt="istgahapp"
+                class="imgsize"
+              />
+              <div class="post-item-txt-btom">
+                <div class="post-item-text">
+                  <a href="#" class="post-link">istgah app</a>
+                  <p class="date-clr">case study</p>
+                </div>
+                <a
+                  href="#"
+                  class="morebtn primery-clr"
+                  >View More</a
+                >
+              </div>
+            </div>
+            <!-- post 4 -->
+            <div class="project-post-items">
+              <img
+                src="./../img/p4.jpg"
+                alt="landing page"
+                class="imgsize"
+              />
+              <div class="post-item-txt-btom">
+                <div class="post-item-text">
+                  <a href="#" class="post-link">landing page</a>
+                  <p class="date-clr">Visual Design</p>
+                </div>
+                <a
+                  href="#"
+                  class="morebtn primery-clr"
+                  >View More</a
+                >
+              </div>
+            </div>
+            <!-- post 5 -->
+            <div class="project-post-items">
+              <img
+                src="./../img/p5.jpg"
+                alt="Physical Product Graphic Design"
+                class="imgsize"
+              />
+              <div class="post-item-txt-btom">
+                <div class="post-item-text">
+                  <a href="#" class="post-link"
+                    >Physical Product Graphic Design</a
+                  >
+                  <p class="date-clr">Visual Design</p>
+                </div>
+                <a
+                  href="#"
+                  class="morebtn primery-clr"
+                  >View More</a
+                >
+              </div>
+            </div>
+            <!-- post 6 -->
+            <div class="project-post-items">
+              <img
+                src="./../img/p6.jpg"
+                alt="weather app-vanila js"
+                class="imgsize"
+              />
+              <div class="post-item-txt-btom">
+                <div class="post-item-text">
+                  <a href="#" class="post-link">weather app-vanila js</a>
+                  <p class="date-clr">front end</p>
+                </div>
+                <a
+                  href="#"
+                  class="morebtn primery-clr"
+                  >View More</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      // navbar
+window.addEventListener("scroll", function () {
+  var header = document.querySelector("header");
+  header.classList.toggle("sticky", window.scrollY > 0);
+});
+
+// nav-responsive
+
+var menu = document.querySelector(".menu");
+var menubtn = document.querySelector(".bx-menu");
+var closebtn = document.querySelector(".bx-x");
+menubtn.addEventListener("click", () => {
+  menu.classList.add("active");
+});
+closebtn.addEventListener("click", () => {
+  menu.classList.remove("active");
+});
+
+</script>
+  </body>
+</html>
